@@ -6,7 +6,19 @@
       "request": "launch",
       "name": "Invoke",
       "program": "${workspaceRoot}/app.js",
-      "console": "integratedTerminal"
+      "console": "integratedTerminal",
+      "runtimeExecutable": "C:\\Users\\Joshu\\AppData\\Roaming\\fnm\\node-versions\\v22.5.1\\installation\\node.exe"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Vitest Tests",
+      "program": "${workspaceFolder}/node_modules/.bin/vitest",
+      "args": ["run"],
+      "autoAttachChildProcesses": true,
+      "restart": true,
+      "console": "integratedTerminal",
+      "runtimeExecutable": "C:\\Users\\Joshu\\AppData\\Roaming\\fnm\\node-versions\\v22.5.1\\installation\\node.exe"
     }
   ]
 }

@@ -14,7 +14,6 @@ export default defineConfig(
       watch: false,
       include: ['test/**/*.test.ts', 'test/**/*.test.js'],
       clearMocks: true,
-      setupFiles: [],
       coverage: {
         all: true,
         provider: 'istanbul',

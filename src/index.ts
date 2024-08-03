@@ -1,14 +1,14 @@
 import { KinesisStreamEvent } from 'aws-lambda';
 import {
-  mapBookingCompleteEventsToExternalBookingCompletedEvents,
-  publishBookingCompletedEvents,
+  mapBookingCompleteEventsToExternalProductOrders,
+  publishProductOrdersToExternalServer,
 } from './services/integration-service';
 
 export const handler = (event: KinesisStreamEvent) => {
-  const externalBookingCompleted = mapBookingCompleteEventsToExternalBookingCompletedEvents(
+  const externalBookingCompleted = mapBookingCompleteEventsToExternalProductOrders(
     event
   );
-  publishBookingCompletedEvents(externalBookingCompleted).then(() =>
+  publishProductOrdersToExternalServer(externalBookingCompleted).then(() =>
     console.log('All events published successfully')
   );
 };

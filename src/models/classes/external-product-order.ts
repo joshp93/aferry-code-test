@@ -1,6 +1,6 @@
 import { BookingCompleted } from '../interfaces/booking-completed';
 
-export class ExternalBookingCompleted {
+export class ExternalProductOrder {
   product_order_id_buyer: number;
   timestamp: string;
   product_provider_buyer: string;

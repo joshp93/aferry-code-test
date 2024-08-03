@@ -1,6 +1,6 @@
-import { ExternalBookingCompleted } from 'src/models/classes/external-product-order';
+import { ExternalProductOrder } from 'src/models/classes/external-product-order';
 
-export const EXPECTED_EXTERNAL_BOOKING_COMPLETE_EVENTS: ExternalBookingCompleted[] = [
+export const EXPECTED_EXTERNAL_PRODUCT_ORDER: ExternalProductOrder[] = [
   {
     product_order_id_buyer: 123461,
     timestamp: '2021-09-13T13:00:59.453Z',

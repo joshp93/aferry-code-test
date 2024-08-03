@@ -1,16 +1,16 @@
 import { setupServer } from 'msw/node';
 import { http } from 'msw';
 import {
-  mapBookingCompleteEventsToExternalBookingCompletedEvents,
-  publishBookingCompletedEvents,
+  mapBookingCompleteEventsToExternalProductOrders,
+  publishProductOrdersToExternalServer,
 } from 'src/services/integration-service';
 import { EVENT_MOCK } from 'test/mock-data/event-mock';
 import { EVENT_MOCK_NO_COMPLETED } from 'test/mock-data/event-mock-no-completed';
-import { EXPECTED_EXTERNAL_BOOKING_COMPLETE_EVENTS } from 'test/mock-data/expected-external-product-orders';
+import { EXPECTED_EXTERNAL_PRODUCT_ORDER } from 'test/mock-data/expected-external-product-orders';
 
 describe('Integration Service', () => {
   let postRequestsMade = 0;
-  let resultsMap: Map<number, 'resolve' | 'reject' | 'network_error'>;
+  let resultsMap: Map<number, 'resolve' | 'reject'>;
   let resultsMapIndex = -1;
 
   const server = setupServer(
@@ -50,37 +50,35 @@ describe('Integration Service', () => {
   afterAll(() => server.close());
 
   it('Should return an array of external product orders with only booking_completed events', () => {
-    const result = mapBookingCompleteEventsToExternalBookingCompletedEvents(
-      EVENT_MOCK
-    );
+    const result = mapBookingCompleteEventsToExternalProductOrders(EVENT_MOCK);
     expect(JSON.stringify(result)).toEqual(
-      JSON.stringify(EXPECTED_EXTERNAL_BOOKING_COMPLETE_EVENTS)
+      JSON.stringify(EXPECTED_EXTERNAL_PRODUCT_ORDER)
     );
   });
 
   it('Should return an empty array if there are no booking completed events', () => {
-    const result = mapBookingCompleteEventsToExternalBookingCompletedEvents(
+    const result = mapBookingCompleteEventsToExternalProductOrders(
       EVENT_MOCK_NO_COMPLETED
     );
     expect(result).toEqual([]);
   });
 
-  it('Should make a single web request for every external booking event', () => {
-    publishBookingCompletedEvents(
-      EXPECTED_EXTERNAL_BOOKING_COMPLETE_EVENTS
-    ).then(() => {
-      expect(postRequestsMade).toBe(2);
-    });
+  it('Should make a single web request for every external product order', () => {
+    publishProductOrdersToExternalServer(EXPECTED_EXTERNAL_PRODUCT_ORDER).then(
+      () => {
+        expect(postRequestsMade).toBe(2);
+      }
+    );
   });
 
   it('Should allow resolutions to continue and report errors when there is a mixture of success and fail', () => {
     const logSpy = vi.spyOn(console, 'log');
     const errorSpy = vi.spyOn(console, 'error');
-    for (let i = 0; i < EXPECTED_EXTERNAL_BOOKING_COMPLETE_EVENTS.length; i++) {
+    for (let i = 0; i < EXPECTED_EXTERNAL_PRODUCT_ORDER.length; i++) {
       resultsMap.set(i, i % 2 ? 'reject' : 'resolve');
     }
 
-    publishBookingCompletedEvents(EXPECTED_EXTERNAL_BOOKING_COMPLETE_EVENTS)
+    publishProductOrdersToExternalServer(EXPECTED_EXTERNAL_PRODUCT_ORDER)
       .then(() => {
         expect(postRequestsMade).toBe(2);
         expect(logSpy).toHaveBeenCalledWith(

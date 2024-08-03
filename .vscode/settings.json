@@ -5,5 +5,5 @@
       "source.fixAll.eslint": "explicit"
     }
   },
-  "sequencediagrams.diagram.style": "simple"
+  "sequencediagrams.diagram.style": "simple",
 }

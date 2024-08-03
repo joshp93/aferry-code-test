@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "build": "tsup",
-    "start:server": "node external",
+    "start:server": "node external-service",
     "invoke": "node app",
     "test": "vitest"
   },
@@ -27,7 +27,10 @@
   },
   "dependencies": {
     "@types/aws-lambda": "^8.10.83",
+    "axios": "^1.7.3",
     "jsonschema": "^1.4.0",
+    "msw": "^2.3.5",
+    "nock": "^13.5.4",
     "source-map-support": "^0.5.16"
   }
 }
